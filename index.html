@@ -67,9 +67,8 @@ body::before{
   width:18px;
   height:18px;
   background:radial-gradient(circle at 30% 30%,#fff1f2,#fb7185);
-  transform:rotate(45deg);
-  opacity:.7;
-  animation:floatHeart 14s linear infinite;
+  opacity:.8;
+  animation:fallHeart 14s linear infinite;
 }
 .heart::before,
 .heart::after{
@@ -86,9 +85,19 @@ body::before{
   left:-9px;
   top:0;
 }
-@keyframes floatHeart{
-  0%{transform:translateY(120%) rotate(45deg) scale(.6);}
-  100%{transform:translateY(-140%) rotate(45deg) scale(1.1);}
+@keyframes fallHeart{
+  0%{
+    transform:translate3d(0,-120%,0) rotate(45deg) scale(.6);
+    opacity:0;
+  }
+  15%{opacity:.9;}
+  50%{
+    transform:translate3d(18px,0,0) rotate(45deg) scale(.9);
+  }
+  100%{
+    transform:translate3d(-12px,140%,0) rotate(45deg) scale(1.1);
+    opacity:0;
+  }
 }
 
 /* coeur qui bat */
@@ -198,23 +207,27 @@ h1{
   box-shadow:0 12px 28px rgba(248,113,113,.25);
 }
 
-/* Quiz fun */
-.quiz-card{
-  margin-bottom:14px;
+/* QUIZ DYNAMIQUE */
+#quizBox{
+  margin-top:4px;
 }
-.quiz-question{
+#quizQuestion{
   font-size:15px;
-  margin-bottom:8px;
+  font-weight:700;
   color:#b91c1c;
-  font-weight:600;
+  margin-bottom:10px;
 }
-.quiz-answers{
+#quizOptions{
   display:flex;
-  flex-wrap:wrap;
+  flex-direction:column;
   gap:8px;
 }
-.quiz-answer-text{
-  margin-top:8px;
+#quizOptions .small-btn{
+  text-align:left;
+  justify-content:flex-start;
+}
+#quizAnswer{
+  margin-top:10px;
   font-size:13px;
   color:#4b5563;
   min-height:18px;
@@ -222,28 +235,86 @@ h1{
   transform:translateY(4px);
   transition:opacity .2s ease,transform .2s ease;
 }
-.quiz-answer-text.visible{
+#quizAnswer.visible{
   opacity:1;
   transform:translateY(0);
 }
-
-/* Poème */
-#poemBox{
-  max-height:330px;
-  overflow-y:auto;
-  padding-right:6px;
-}
-#poemText{
-  font-size:14px;
-  line-height:1.6;
-  white-space:normal;
-  color:#374151;
-}
-.poem-meta{
+#quizProgress{
   margin-top:10px;
   font-size:12px;
-  color:#6b7280;
+  color:#9ca3af;
   text-align:right;
+}
+
+/* ENVELOPPE + LETTRE */
+.envelope-wrapper{
+  margin-top:14px;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  perspective:1000px;
+}
+.envelope{
+  position:relative;
+  width:260px;
+  height:180px;
+  border-radius:16px;
+  background:#fecaca;
+  box-shadow:0 14px 32px rgba(248,113,113,.5);
+  overflow:hidden;
+}
+.envelope-pocket{
+  position:absolute;
+  inset:40% 0 0 0;
+  background:#fee2e2;
+  border-radius:0 0 16px 16px;
+  box-shadow:inset 0 4px 6px rgba(0,0,0,.06);
+}
+.envelope-flap{
+  position:absolute;
+  top:0;
+  left:0;
+  width:100%;
+  height:60%;
+  background:#f97373;
+  clip-path:polygon(0 0,100% 0,50% 70%);
+  transform-origin:top;
+  transition:transform .8s ease;
+  z-index:2;
+}
+.letter{
+  position:absolute;
+  left:10%;
+  right:10%;
+  bottom:0;
+  height:72%;
+  background:#ffffff;
+  border-radius:10px;
+  box-shadow:0 8px 18px rgba(0,0,0,.18);
+  padding:10px 12px;
+  transform:translateY(82%);
+  transition:transform .8s ease .25s;
+  overflow:hidden;
+}
+.letter-inner{
+  font-size:12px;
+  line-height:1.55;
+  color:#374151;
+  max-height:100%;
+  overflow-y:auto;
+}
+.letter-inner::-webkit-scrollbar{width:3px;}
+.letter-inner::-webkit-scrollbar-thumb{
+  background:#fecaca;
+  border-radius:999px;
+}
+
+/* État ouvert */
+.envelope-wrapper.open .envelope-flap{
+  transform:rotateX(180deg);
+}
+.envelope-wrapper.open .letter{
+  transform:translateY(4%);
 }
 
 /* Dernier écran */
@@ -264,21 +335,12 @@ h1{
   font-size:13px;
   color:#9ca3af;
 }
-
-/* Scrollbar custom */
-#poemBox::-webkit-scrollbar{width:4px;}
-#poemBox::-webkit-scrollbar-track{background:transparent;}
-#poemBox::-webkit-scrollbar-thumb{
-  background:linear-gradient(180deg,#ef4444,#f97373);
-  border-radius:999px;
-}
 </style>
 </head>
 <body>
 
 <div class="container">
   <div class="hearts">
-    <!-- plein de petits coeurs -->
     <div class="heart" style="left:5%;animation-delay:0s;animation-duration:15s;"></div>
     <div class="heart" style="left:18%;animation-delay:2s;animation-duration:17s;"></div>
     <div class="heart" style="left:32%;animation-delay:4s;animation-duration:14s;"></div>
@@ -290,85 +352,68 @@ h1{
 
   <div class="beating-heart"></div>
   <h1>Pour toi, mon amour ❤️</h1>
-  <div class="subtitle">Version spéciale Saint‑Valentin, 100% love & 100% nous</div>
+  <div class="subtitle">Spécial Saint‑Valentin, avec un peu de folie et beaucoup de nous</div>
 
-  <!-- ÉCRAN 1 : INTRO -->
+  <!-- ÉCRAN 1 -->
   <section id="screen1" class="screen active">
     <div class="card">
       <p style="font-size:14px;color:#4b5563;margin-bottom:10px;">
-        Si tu lis ça, c’est que j’ai la chance d’être tombé sur la femme la plus incroyable du monde.
-        Clique sur le bouton, laisse les cœurs faire leur vie, et profite du voyage.
+        Si tu lis ça, c’est que j’ai clairement trop de chance.  
+        Clique sur le bouton, laisse la magie (et les cœurs) faire le reste.
       </p>
       <p style="font-size:13px;color:#9ca3af;">
-        (Promis, rien de cringe… enfin j’essaie.)
+        PS : aucun algorithme ne t’aime autant que moi.
       </p>
     </div>
 
-    <button class="main-btn" data-next="screen2">💌 Ouvrir ma surprise</button>
+    <button class="main-btn" data-next="screen2">💌 On commence ?</button>
   </section>
 
-  <!-- ÉCRAN 2 : QUIZ FUN -->
+  <!-- ÉCRAN 2 : QUIZ DYNAMIQUE -->
   <section id="screen2" class="screen">
     <div class="card">
-      <p style="font-size:15px;font-weight:700;margin-bottom:10px;color:#b91c1c;">
+      <p style="font-size:15px;font-weight:700;margin-bottom:6px;color:#b91c1c;">
         Mini quiz débile mais romantique 💘
       </p>
+      <p style="font-size:13px;color:#6b7280;margin-bottom:10px;">
+        Réponds comme tu le sens, il n’y a que des bonnes réponses (sauf si tu dis que tu ne m’aimes pas, là on a un bug).
+      </p>
 
-      <div class="quiz-card">
-        <p class="quiz-question">Si on était un film, ce serait plutôt…</p>
-        <div class="quiz-answers">
-          <button class="small-btn answer-btn" data-target="q1" data-choice="notebook">The Notebook</button>
-          <button class="small-btn answer-btn" data-target="q1" data-choice="fast">Fast & Furious (mais avec des tajines)</button>
-          <button class="small-btn answer-btn" data-target="q1" data-choice="mix">Un mélange chelou des deux</button>
-        </div>
-        <div class="quiz-answer-text" id="q1"></div>
-      </div>
-
-      <div class="quiz-card">
-        <p class="quiz-question">Qui ronfle le plus fort ? 😴</p>
-        <div class="quiz-answers">
-          <button class="small-btn answer-btn" data-target="q2" data-choice="toi">Toi (désolé mais c’est vrai)</button>
-          <button class="small-btn answer-btn" data-target="q2" data-choice="moi">Moi (j’assume)</button>
-          <button class="small-btn answer-btn" data-target="q2" data-choice="chat">Le lit qui grince, pas nous</button>
-        </div>
-        <div class="quiz-answer-text" id="q2"></div>
-      </div>
-
-      <div class="quiz-card">
-        <p class="quiz-question">Notre super‑pouvoir de couple ?</p>
-        <div class="quiz-answers">
-          <button class="small-btn answer-btn" data-target="q3" data-choice="team">Toujours se relever ensemble</button>
-          <button class="small-btn answer-btn" data-target="q3" data-choice="rire">Transformer les galères en fous rires</button>
-          <button class="small-btn answer-btn" data-target="q3" data-choice="tout">Tout ça, plus encore</button>
-        </div>
-        <div class="quiz-answer-text" id="q3"></div>
-      </div>
-
-      <div class="quiz-card">
-        <p class="quiz-question">Dernière : si j’avais un seul mot pour te décrire…</p>
-        <div class="quiz-answers">
-          <button class="small-btn answer-btn" data-target="q4" data-choice="reine">Reine</button>
-          <button class="small-btn answer-btn" data-target="q4" data-choice="warrior">Warrior</button>
-          <button class="small-btn answer-btn" data-target="q4" data-choice="tout">Reine‑warrior‑bébé‑love</button>
-        </div>
-        <div class="quiz-answer-text" id="q4"></div>
+      <div id="quizBox">
+        <p id="quizQuestion"></p>
+        <div id="quizOptions"></div>
+        <div id="quizAnswer"></div>
+        <div id="quizProgress"></div>
       </div>
     </div>
 
-    <button class="main-btn" data-next="screen3">📜 Lire ma lettre</button>
+    <button class="main-btn" id="nextQuizBtn">➜ Question suivante</button>
+    <button class="small-btn" style="margin-top:10px;" data-next="screen3">
+      📜 Passer direct à la lettre
+    </button>
   </section>
 
-  <!-- ÉCRAN 3 : LETTRE -->
+  <!-- ÉCRAN 3 : ENVELOPPE + LETTRE -->
   <section id="screen3" class="screen">
-    <div class="card" id="poemBox">
-      <div id="poemText"></div>
-      <div class="poem-meta">
-        De Hamadouche<br>
-        Pour la femme de ma vie 💛
+    <div class="card">
+      <p style="font-size:15px;font-weight:700;margin-bottom:8px;color:#b91c1c;text-align:center;">
+        Une petite lettre rien que pour toi…
+      </p>
+
+      <div class="envelope-wrapper" id="envelopeWrapper">
+        <div class="envelope">
+          <div class="envelope-flap"></div>
+          <div class="envelope-pocket"></div>
+          <div class="letter">
+            <div class="letter-inner" id="letterInner">
+              <!-- texte tapé dynamiquement -->
+            </div>
+          </div>
+        </div>
       </div>
     </div>
 
-    <button class="main-btn" id="startPoem">▶️ Lancer la lecture animée</button>
+    <button class="main-btn" id="openLetterBtn">✉️ Ouvrir l’enveloppe & lire la lettre</button>
     <button class="small-btn" style="margin-top:10px;" data-next="screen4">
       ➜ Voir le message final
     </button>
@@ -379,10 +424,9 @@ h1{
     <div class="card">
       <div class="big-heart-final">❤️</div>
       <p class="final-text">
-        Merci d’être toi.<br>
-        Merci pour ta patience, ta force, ta beauté (oui, même quand tu dis le contraire).<br><br>
-        Je ferai tout pour que tu te sentes aimée, respectée,
-        rassurée et fière de toi, chaque jour un peu plus.
+        Merci d’être toi.  
+        Merci pour ta force, ta douceur, ta patience, et même tes doutes.  
+        Je suis là pour te rappeler chaque jour à quel point tu es incroyable.
       </p>
       <p class="signature">
         Je t’aime d’un amour immense, sincère et infini.<br>
@@ -398,7 +442,7 @@ h1{
 </div>
 
 <script>
-// navigation entre écrans
+// Navigation entre écrans
 document.querySelectorAll('[data-next]').forEach(btn=>{
   btn.addEventListener('click',()=>{
     const nextId = btn.getAttribute('data-next');
@@ -408,42 +452,112 @@ document.querySelectorAll('[data-next]').forEach(btn=>{
   });
 });
 
-// réponses fun
-const reactions = {
-  q1:{
-    notebook:"Clairement un truc à l’eau de rose où je pleure en cachette et toi tu te moques de moi.",
-    fast:"On roule vite vers le mariage mais on s’arrête toujours pour manger. Priorités.",
-    mix:"On s’aime comme dans The Notebook, mais on conduit comme dans Fast & Furious (en mieux garés)."
+/* QUIZ DYNAMIQUE */
+const quizData = [
+  {
+    question:"Si on était un film, ce serait plutôt…",
+    options:[
+      "The Notebook",
+      "Fast & Furious (mais avec des tajines)",
+      "Un mélange chelou des deux"
+    ],
+    replies:[
+      "Clairement un truc à l’eau de rose où je pleure en cachette et toi tu te moques de moi.",
+      "On roule vite vers le mariage mais on s’arrête toujours pour manger. Priorités.",
+      "On s’aime comme dans The Notebook, mais on conduit comme dans Fast & Furious (en mieux garés)."
+    ]
   },
-  q2:{
-    toi:"C’est faux, c’est juste ton cœur qui parle très fort la nuit. 😏",
-    moi:"Ok, mais c’est le son d’un homme amoureux, ça compte pas.",
-    chat:"Parfait, on accuse le lit et on ne se fâche avec personne."
+  {
+    question:"Qui ronfle le plus fort ? 😴",
+    options:[
+      "Toi (désolé mais c’est vrai)",
+      "Moi (j’assume)",
+      "Le lit qui grince, pas nous"
+    ],
+    replies:[
+      "C’est faux, c’est juste ton cœur qui parle très fort la nuit. 😏",
+      "Ok, mais c’est le son d’un homme amoureux, ça compte pas.",
+      "Parfait, on accuse le lit et on ne se fâche avec personne."
+    ]
   },
-  q3:{
-    team:"On n’est pas parfaits, mais notre team, elle, elle défonce tout.",
-    rire:"Tant qu’on sait rire ensemble, tout ira toujours.",
-    tout:"Avoue, on est un peu trop stylés pour ce monde."
+  {
+    question:"Notre super‑pouvoir de couple ?",
+    options:[
+      "Toujours se relever ensemble",
+      "Transformer les galères en fous rires",
+      "Tout ça, plus encore"
+    ],
+    replies:[
+      "On n’est pas parfaits, mais notre team, elle, elle défonce tout.",
+      "Tant qu’on sait rire ensemble, tout ira toujours.",
+      "Avoue, on est un peu trop stylés pour ce monde."
+    ]
   },
-  q4:{
-    reine:"Reine aujourd’hui, reine demain, reine jusqu’au bout Inshallah.",
-    warrior:"Même cassée, tu restes plus forte que la plupart des gens debout.",
-    tout:"Il n’existe pas encore de mot assez puissant, alors j’ai tout mis d’un coup."
+  {
+    question:"Si j’avais un seul mot pour te décrire…",
+    options:[
+      "Reine",
+      "Warrior",
+      "Reine‑warrior‑bébé‑love"
+    ],
+    replies:[
+      "Reine aujourd’hui, reine demain, reine jusqu’au bout Inshallah.",
+      "Même cassée, tu restes plus forte que la plupart des gens debout.",
+      "Il n’existe pas encore de mot assez puissant, alors j’ai tout mis d’un coup."
+    ]
   }
-};
+];
 
-document.querySelectorAll('.answer-btn').forEach(btn=>{
-  btn.addEventListener('click',()=>{
-    const target = btn.dataset.target;
-    const choice = btn.dataset.choice;
-    const box = document.getElementById(target);
-    box.textContent = reactions[target][choice];
-    box.classList.add('visible');
+const quizQuestionEl = document.getElementById('quizQuestion');
+const quizOptionsEl = document.getElementById('quizOptions');
+const quizAnswerEl = document.getElementById('quizAnswer');
+const quizProgressEl = document.getElementById('quizProgress');
+const nextQuizBtn = document.getElementById('nextQuizBtn');
+
+let currentQuestion = 0;
+let hasAnswered = false;
+
+function renderQuestion(){
+  const q = quizData[currentQuestion];
+  quizQuestionEl.textContent = q.question;
+  quizOptionsEl.innerHTML = '';
+  quizAnswerEl.textContent = '';
+  quizAnswerEl.classList.remove('visible');
+  hasAnswered = false;
+
+  q.options.forEach((opt,idx)=>{
+    const btn = document.createElement('button');
+    btn.className = 'small-btn';
+    btn.textContent = opt;
+    btn.addEventListener('click',()=>{
+      if(hasAnswered) return;
+      hasAnswered = true;
+      quizAnswerEl.textContent = q.replies[idx];
+      quizAnswerEl.classList.add('visible');
+    });
+    quizOptionsEl.appendChild(btn);
   });
+
+  quizProgressEl.textContent = `Question ${currentQuestion+1} / ${quizData.length}`;
+  nextQuizBtn.textContent = (currentQuestion === quizData.length-1) ? "💕 Terminer le quiz" : "➜ Question suivante";
+}
+
+nextQuizBtn.addEventListener('click',()=>{
+  if(currentQuestion < quizData.length-1){
+    currentQuestion++;
+    renderQuestion();
+  }else{
+    // Aller automatiquement à la lettre
+    document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
+    document.getElementById('screen3').classList.add('active');
+  }
 });
 
-// lettre
-const poem = `Mon amour,
+// initialiser le quiz
+renderQuestion();
+
+/* LETTRE + ENVELOPPE */
+const letterText = `Mon amour,
 
 Je veux que tu n’oublies jamais à quel point tu es exceptionnelle. Tu es, sans aucun doute, la plus merveilleuse des femmes. La plus forte, la plus douce, la plus belle. Ta présence illumine ma vie d’une manière que je ne pourrais même pas expliquer avec des mots.
 
@@ -465,23 +579,30 @@ J’ai hâte de voyager avec toi, de découvrir le monde à tes côtés, de vivr
 
 Je t’aime d’un amour immense, sincère et infini. 💛`;
 
-const poemEl = document.getElementById('poemText');
-let poemIndex = 0;
-let typing = false;
+const envelopeWrapper = document.getElementById('envelopeWrapper');
+const letterInner = document.getElementById('letterInner');
+const openLetterBtn = document.getElementById('openLetterBtn');
 
-function typePoem(){
-  if(poemIndex >= poem.length){typing=false;return;}
-  const char = poem[poemIndex];
-  poemEl.innerHTML += (char === '\n') ? '<br>' : char;
-  poemIndex++;
-  const delay = (char === '.' || char === '!' || char === '…') ? 45 : 22;
-  setTimeout(typePoem, delay);
+let letterIndex = 0;
+let typingLetter = false;
+
+function typeLetter(){
+  if(letterIndex >= letterText.length){typingLetter=false;return;}
+  const ch = letterText[letterIndex];
+  letterInner.innerHTML += (ch === '\n') ? '<br>' : ch;
+  letterIndex++;
+  const delay = (ch === '.' || ch === '!' || ch === '…') ? 45 : 22;
+  setTimeout(typeLetter, delay);
 }
 
-document.getElementById('startPoem').addEventListener('click',()=>{
-  if(typing || poemIndex>0) return;
-  typing = true;
-  typePoem();
+openLetterBtn.addEventListener('click',()=>{
+  if(!envelopeWrapper.classList.contains('open')){
+    envelopeWrapper.classList.add('open');
+    if(!typingLetter && letterIndex===0){
+      typingLetter = true;
+      setTimeout(typeLetter, 500); // commence un peu après l’ouverture
+    }
+  }
 });
 </script>
 </body>
