@@ -22,33 +22,70 @@ body{
   overflow-x:hidden;
 }
 
-/* FOND PLEIN DE GROS COEURS BLANCS façon ton image */
+/* FOND DESIGN PROPRE : plein de cœurs blancs bien répartis partout */
 body::before{
   content:'';
   position:fixed;
-  inset:-15%;
+  inset:0;
   background-image:
-    radial-gradient(ellipse 80px 90px at 8% 15%, transparent 48%, #ffffff 48%, #ffffff 52%, transparent 52%),
-    radial-gradient(ellipse 70px 80px at 8% 8%, transparent 48%, #ffffff 48%, #ffffff 52%, transparent 52%),
-    radial-gradient(ellipse 90px 100px at 30% 5%, transparent 48%, #ffffff 48%, #ffffff 52%, transparent 52%),
-    radial-gradient(ellipse 75px 85px at 30% -2%, transparent 48%, #ffffff 48%, #ffffff 52%, transparent 52%),
-    radial-gradient(ellipse 95px 105px at 60% 8%, transparent 48%, #ffffff 48%, #ffffff 52%, transparent 52%),
-    radial-gradient(ellipse 80px 90px at 60% 0%, transparent 48%, #ffffff 48%, #ffffff 52%, transparent 52%),
-    radial-gradient(ellipse 85px 95px at 88% 12%, transparent 48%, #ffffff 48%, #ffffff 52%, transparent 52%),
-    radial-gradient(ellipse 75px 85px at 88% 3%, transparent 48%, #ffffff 48%, #ffffff 52%, transparent 52%),
-    radial-gradient(ellipse 100px 110px at 5% 45%, transparent 48%, #ffffff 48%, #ffffff 52%, transparent 52%),
-    radial-gradient(ellipse 85px 95px at 5% 36%, transparent 48%, #ffffff 48%, #ffffff 52%, transparent 52%),
-    radial-gradient(ellipse 90px 100px at 35% 50%, transparent 48%, #ffffff 48%, #ffffff 52%, transparent 52%),
-    radial-gradient(ellipse 80px 90px at 35% 42%, transparent 48%, #ffffff 48%, #ffffff 52%, transparent 52%),
-    radial-gradient(ellipse 95px 105px at 70% 48%, transparent 48%, #ffffff 48%, #ffffff 52%, transparent 52%),
-    radial-gradient(ellipse 75px 85px at 70% 40%, transparent 48%, #ffffff 48%, #ffffff 52%, transparent 52%),
-    radial-gradient(ellipse 100px 110px at 15% 78%, transparent 48%, #ffffff 48%, #ffffff 52%, transparent 52%),
-    radial-gradient(ellipse 85px 95px at 15% 70%, transparent 48%, #ffffff 48%, #ffffff 52%, transparent 52%),
-    radial-gradient(ellipse 90px 100px at 50% 82%, transparent 48%, #ffffff 48%, #ffffff 52%, transparent 52%),
-    radial-gradient(ellipse 80px 90px at 50% 74%, transparent 48%, #ffffff 48%, #ffffff 52%, transparent 52%),
-    radial-gradient(ellipse 105px 115px at 85% 80%, transparent 48%, #ffffff 48%, #ffffff 52%, transparent 52%),
-    radial-gradient(ellipse 90px 100px at 85% 72%, transparent 48%, #ffffff 48%, #ffffff 52%, transparent 52%);
-  opacity:.38;
+    /* rangée haute gauche */
+    radial-gradient(circle 40px at 8% 8%, transparent 48%, rgba(255,255,255,.4) 48%, rgba(255,255,255,.4) 52%, transparent 52%),
+    radial-gradient(circle 30px at 8% 3%, transparent 48%, rgba(255,255,255,.4) 48%, rgba(255,255,255,.4) 52%, transparent 52%),
+    radial-gradient(circle 35px at 22% 12%, transparent 48%, rgba(255,255,255,.35) 48%, rgba(255,255,255,.35) 52%, transparent 52%),
+    radial-gradient(circle 28px at 22% 7%, transparent 48%, rgba(255,255,255,.35) 48%, rgba(255,255,255,.35) 52%, transparent 52%),
+    
+    /* rangée haute centre */
+    radial-gradient(circle 42px at 45% 6%, transparent 48%, rgba(255,255,255,.38) 48%, rgba(255,255,255,.38) 52%, transparent 52%),
+    radial-gradient(circle 32px at 45% 0%, transparent 48%, rgba(255,255,255,.38) 48%, rgba(255,255,255,.38) 52%, transparent 52%),
+    radial-gradient(circle 38px at 65% 10%, transparent 48%, rgba(255,255,255,.36) 48%, rgba(255,255,255,.36) 52%, transparent 52%),
+    radial-gradient(circle 30px at 65% 4%, transparent 48%, rgba(255,255,255,.36) 48%, rgba(255,255,255,.36) 52%, transparent 52%),
+    
+    /* rangée haute droite */
+    radial-gradient(circle 45px at 85% 8%, transparent 48%, rgba(255,255,255,.42) 48%, rgba(255,255,255,.42) 52%, transparent 52%),
+    radial-gradient(circle 35px at 85% 2%, transparent 48%, rgba(255,255,255,.42) 48%, rgba(255,255,255,.42) 52%, transparent 52%),
+    radial-gradient(circle 36px at 95% 15%, transparent 48%, rgba(255,255,255,.38) 48%, rgba(255,255,255,.38) 52%, transparent 52%),
+    radial-gradient(circle 28px at 95% 10%, transparent 48%, rgba(255,255,255,.38) 48%, rgba(255,255,255,.38) 52%, transparent 52%),
+    
+    /* rangée milieu gauche */
+    radial-gradient(circle 38px at 5% 35%, transparent 48%, rgba(255,255,255,.36) 48%, rgba(255,255,255,.36) 52%, transparent 52%),
+    radial-gradient(circle 30px at 5% 30%, transparent 48%, rgba(255,255,255,.36) 48%, rgba(255,255,255,.36) 52%, transparent 52%),
+    radial-gradient(circle 40px at 18% 42%, transparent 48%, rgba(255,255,255,.4) 48%, rgba(255,255,255,.4) 52%, transparent 52%),
+    radial-gradient(circle 32px at 18% 37%, transparent 48%, rgba(255,255,255,.4) 48%, rgba(255,255,255,.4) 52%, transparent 52%),
+    
+    /* rangée milieu centre */
+    radial-gradient(circle 50px at 50% 50%, transparent 48%, rgba(255,255,255,.45) 48%, rgba(255,255,255,.45) 52%, transparent 52%),
+    radial-gradient(circle 40px at 50% 44%, transparent 48%, rgba(255,255,255,.45) 48%, rgba(255,255,255,.45) 52%, transparent 52%),
+    
+    /* rangée milieu droite */
+    radial-gradient(circle 38px at 82% 38%, transparent 48%, rgba(255,255,255,.38) 48%, rgba(255,255,255,.38) 52%, transparent 52%),
+    radial-gradient(circle 30px at 82% 33%, transparent 48%, rgba(255,255,255,.38) 48%, rgba(255,255,255,.38) 52%, transparent 52%),
+    radial-gradient(circle 42px at 95% 45%, transparent 48%, rgba(255,255,255,.4) 48%, rgba(255,255,255,.4) 52%, transparent 52%),
+    radial-gradient(circle 34px at 95% 40%, transparent 48%, rgba(255,255,255,.4) 48%, rgba(255,255,255,.4) 52%, transparent 52%),
+    
+    /* rangée basse gauche */
+    radial-gradient(circle 36px at 10% 68%, transparent 48%, rgba(255,255,255,.35) 48%, rgba(255,255,255,.35) 52%, transparent 52%),
+    radial-gradient(circle 28px at 10% 63%, transparent 48%, rgba(255,255,255,.35) 48%, rgba(255,255,255,.35) 52%, transparent 52%),
+    radial-gradient(circle 40px at 25% 75%, transparent 48%, rgba(255,255,255,.38) 48%, rgba(255,255,255,.38) 52%, transparent 52%),
+    radial-gradient(circle 32px at 25% 70%, transparent 48%, rgba(255,255,255,.38) 48%, rgba(255,255,255,.38) 52%, transparent 52%),
+    
+    /* rangée basse centre */
+    radial-gradient(circle 38px at 48% 72%, transparent 48%, rgba(255,255,255,.36) 48%, rgba(255,255,255,.36) 52%, transparent 52%),
+    radial-gradient(circle 30px at 48% 67%, transparent 48%, rgba(255,255,255,.36) 48%, rgba(255,255,255,.36) 52%, transparent 52%),
+    
+    /* rangée basse droite */
+    radial-gradient(circle 45px at 75% 80%, transparent 48%, rgba(255,255,255,.42) 48%, rgba(255,255,255,.42) 52%, transparent 52%),
+    radial-gradient(circle 35px at 75% 74%, transparent 48%, rgba(255,255,255,.42) 48%, rgba(255,255,255,.42) 52%, transparent 52%),
+    radial-gradient(circle 40px at 92% 88%, transparent 48%, rgba(255,255,255,.4) 48%, rgba(255,255,255,.4) 52%, transparent 52%),
+    radial-gradient(circle 32px at 92% 83%, transparent 48%, rgba(255,255,255,.4) 48%, rgba(255,255,255,.4) 52%, transparent 52%),
+    
+    /* encore quelques cœurs entre les rangées */
+    radial-gradient(circle 34px at 35% 25%, transparent 48%, rgba(255,255,255,.32) 48%, rgba(255,255,255,.32) 52%, transparent 52%),
+    radial-gradient(circle 26px at 35% 20%, transparent 48%, rgba(255,255,255,.32) 48%, rgba(255,255,255,.32) 52%, transparent 52%),
+    radial-gradient(circle 36px at 70% 58%, transparent 48%, rgba(255,255,255,.34) 48%, rgba(255,255,255,.34) 52%, transparent 52%),
+    radial-gradient(circle 28px at 70% 53%, transparent 48%, rgba(255,255,255,.34) 48%, rgba(255,255,255,.34) 52%, transparent 52%),
+    radial-gradient(circle 38px at 15% 55%, transparent 48%, rgba(255,255,255,.36) 48%, rgba(255,255,255,.36) 52%, transparent 52%),
+    radial-gradient(circle 30px at 15% 50%, transparent 48%, rgba(255,255,255,.36) 48%, rgba(255,255,255,.36) 52%, transparent 52%);
+  opacity:1;
   z-index:-3;
 }
 
@@ -558,13 +595,13 @@ const quizData = [
     question:"Quel genre de moment te rend le plus heureuse avec moi ?",
     options:[
       "Les câlins sous la couette",
-      "Les délires où on rigole trop",
-      "Se casser le ventre dans nos fast-food ensemble"
+      "Quand on se casse le ventre dans nos fast-food ensemble",
+      "Les délires où on rigole trop"
     ],
     replies:[
       "Je note : encore plus de moments collés‑serrés au programme.",
-      "Si on arrive à rire même quand tout est nul, c'est qu'on est vraiment forts.",
-      "C'est notre truc à nous. Burger, frites, et toi qui rigoles avec la bouche pleine. Parfait."
+      "C'est notre truc à nous. Burger, frites, et toi qui rigoles avec la bouche pleine. Parfait.",
+      "Si on arrive à rire même quand tout est nul, c'est qu'on est vraiment forts."
     ]
   },
   {
