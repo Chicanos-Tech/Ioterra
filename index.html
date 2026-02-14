@@ -12,7 +12,7 @@
 
 body{
   font-family:'Poppins',sans-serif;
-  background:#ff0000; /* rouge plein */
+  background:#ff0000;
   color:#1f2933;
   min-height:100vh;
   display:flex;
@@ -22,24 +22,22 @@ body{
   overflow-x:hidden;
 }
 
-/* motif coeurs blancs en fond (style image) */
+/* gros motif de cœurs blancs façon fond que tu as envoyé */
 body::before{
   content:'';
   position:fixed;
-  inset:-20%;
+  inset:-10%;
   background:
-    radial-gradient(circle at 10% 20%, transparent 40%, #ffffff 40%, #ffffff 42%, transparent 42%),
-    radial-gradient(circle at 40% 10%, transparent 40%, #ffffff 40%, #ffffff 42%, transparent 42%),
-    radial-gradient(circle at 80% 20%, transparent 40%, #ffffff 40%, #ffffff 42%, transparent 42%),
-    radial-gradient(circle at 20% 60%, transparent 40%, #ffffff 40%, #ffffff 42%, transparent 42%),
-    radial-gradient(circle at 60% 70%, transparent 40%, #ffffff 40%, #ffffff 42%, transparent 42%),
-    radial-gradient(circle at 90% 60%, transparent 40%, #ffffff 40%, #ffffff 42%, transparent 42%);
-  background-size:40% 40%;
-  opacity:.35;
+    radial-gradient(circle at 0% 20%,transparent 55%,#ffffff 55%,#ffffff 60%,transparent 60%),
+    radial-gradient(circle at 40% 0%,transparent 55%,#ffffff 55%,#ffffff 60%,transparent 60%),
+    radial-gradient(circle at 100% 20%,transparent 55%,#ffffff 55%,#ffffff 60%,transparent 60%),
+    radial-gradient(circle at 20% 70%,transparent 55%,#ffffff 55%,#ffffff 60%,transparent 60%),
+    radial-gradient(circle at 70% 80%,transparent 55%,#ffffff 55%,#ffffff 60%,transparent 60%),
+    radial-gradient(circle at 110% 60%,transparent 55%,#ffffff 55%,#ffffff 60%,transparent 60%);
+  background-size:55% 55%;
+  opacity:.32;
   z-index:-3;
 }
-
-/* léger glow rouge */
 body::after{
   content:'';
   position:fixed;
@@ -66,7 +64,7 @@ body::after{
   overflow:hidden;
 }
 
-/* pluie de coeurs cartoon */
+/* pluie de cœurs */
 .hearts{
   position:absolute;
   inset:0;
@@ -79,7 +77,7 @@ body::after{
   width:18px;
   height:18px;
   background:radial-gradient(circle at 30% 30%,#fff1f2,#fb7185);
-  opacity:.85;
+  opacity:.9;
   animation:fallHeart 14s linear infinite;
 }
 .heart::before,
@@ -99,15 +97,15 @@ body::after{
 }
 @keyframes fallHeart{
   0%{
-    transform:translate3d(0,-120%,0) rotate(45deg) scale(.6);
+    transform:translate3d(0,-130%,0) rotate(45deg) scale(.6);
     opacity:0;
   }
-  15%{opacity:.95;}
+  15%{opacity:1;}
   50%{
     transform:translate3d(18px,0,0) rotate(45deg) scale(.9);
   }
   100%{
-    transform:translate3d(-12px,140%,0) rotate(45deg) scale(1.1);
+    transform:translate3d(-16px,150%,0) rotate(45deg) scale(1.1);
     opacity:0;
   }
 }
@@ -258,7 +256,7 @@ h1{
   text-align:right;
 }
 
-/* ENVELOPPE + LETTRE */
+/* ENVELOPPE + LETTRE en GRAND */
 .envelope-wrapper{
   margin-top:14px;
   display:flex;
@@ -321,12 +319,61 @@ h1{
   border-radius:999px;
 }
 
-/* État ouvert */
+/* État ouvert : lettre sort et la version GRAND s’affiche */
 .envelope-wrapper.open .envelope-flap{
   transform:rotateX(180deg);
 }
 .envelope-wrapper.open .letter{
   transform:translateY(4%);
+}
+
+/* lettre en plein écran */
+#bigLetterOverlay{
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,.65);
+  display:none;
+  justify-content:center;
+  align-items:center;
+  z-index:50;
+}
+#bigLetterOverlay.active{display:flex;}
+.big-letter{
+  width:90%;
+  max-width:480px;
+  max-height:80vh;
+  background:#fff7f7;
+  border-radius:20px;
+  padding:18px 18px 16px;
+  box-shadow:0 22px 60px rgba(0,0,0,.6);
+  border:2px solid #fecaca;
+  overflow-y:auto;
+}
+.big-letter h2{
+  font-size:18px;
+  margin-bottom:8px;
+  color:#b91c1c;
+  text-align:center;
+}
+.big-letter-content{
+  font-size:14px;
+  line-height:1.7;
+  color:#374151;
+  white-space:pre-line;
+}
+.big-letter-close{
+  margin-top:12px;
+  text-align:center;
+}
+.big-letter-close button{
+  padding:8px 18px;
+  border-radius:999px;
+  border:none;
+  background:#ef4444;
+  color:#fff;
+  font-size:13px;
+  font-weight:600;
+  cursor:pointer;
 }
 
 /* Dernier écran */
@@ -351,6 +398,9 @@ h1{
 </head>
 <body>
 
+<!-- MUSIQUE LOVE 2026 EN FOND (remplace src par ton fichier mp3 si tu veux) -->
+<audio id="bgMusic" src="https://files.freemusicarchive.org/storage-freemusicarchive-org/music/no_curator/Monplaisir/Take_the_lead/Monplaisir_-_Sweet_Dreams.mp3" autoplay loop></audio>
+
 <div class="container">
   <div class="hearts">
     <div class="heart" style="left:5%;animation-delay:0s;animation-duration:15s;"></div>
@@ -364,7 +414,7 @@ h1{
 
   <div class="beating-heart"></div>
   <h1>Pour toi, mon amour ❤️</h1>
-  <div class="subtitle">Spécial Saint‑Valentin, avec un peu de folie et beaucoup de nous</div>
+  <div class="subtitle">Spécial Saint‑Valentin, version Rabie & toi</div>
 
   <!-- ÉCRAN 1 -->
   <section id="screen1" class="screen active">
@@ -423,7 +473,7 @@ h1{
       </div>
     </div>
 
-    <button class="main-btn" id="openLetterBtn">✉️ Ouvrir l’enveloppe & lire la lettre</button>
+    <button class="main-btn" id="openLetterBtn">✉️ Ouvrir l’enveloppe & afficher la lettre</button>
     <button class="small-btn" style="margin-top:10px;" data-next="screen4">
       ➜ Voir le message final
     </button>
@@ -451,8 +501,19 @@ h1{
 
 </div>
 
+<!-- LETTRE EN GRAND -->
+<div id="bigLetterOverlay">
+  <div class="big-letter">
+    <h2>Ma lettre pour toi</h2>
+    <div class="big-letter-content" id="bigLetterContent"></div>
+    <div class="big-letter-close">
+      <button id="closeBigLetter">Fermer</button>
+    </div>
+  </div>
+</div>
+
 <script>
-// Navigation
+// navigation
 document.querySelectorAll('[data-next]').forEach(btn=>{
   btn.addEventListener('click',()=>{
     const nextId = btn.getAttribute('data-next');
@@ -462,7 +523,13 @@ document.querySelectorAll('[data-next]').forEach(btn=>{
   });
 });
 
-/* QUIZ DYNAMIQUE avec Kissing Booth / Larajins */
+/* MUSIQUE auto-play (certains navigateurs demanderont un tap) */
+const bgMusic = document.getElementById('bgMusic');
+document.addEventListener('click',()=>{
+  if(bgMusic.paused){ bgMusic.play().catch(()=>{}); }
+},{once:true});
+
+/* QUIZ DYNAMIQUE (question ronflement remplacée par romantique) */
 const quizData = [
   {
     question:"Si on était un film, ce serait plutôt…",
@@ -478,16 +545,16 @@ const quizData = [
     ]
   },
   {
-    question:"Qui ronfle le plus fort ? 😴",
+    question:"Quel genre de moment te rend le plus heureuse avec moi ?",
     options:[
-      "Toi (désolé mais c’est vrai)",
-      "Moi (j’assume)",
-      "Le lit qui grince, pas nous"
+      "Les câlins sous la couette",
+      "Les délires où on rigole trop",
+      "Les discussions profondes à 2h du matin"
     ],
     replies:[
-      "C’est faux, c’est juste ton cœur qui parle très fort la nuit. 😏",
-      "Ok, mais c’est le son d’un homme amoureux, ça compte pas.",
-      "Parfait, on accuse le lit et on ne se fâche avec personne."
+      "Je note : encore plus de moments collés‑serrés au programme.",
+      "Si on arrive à rire même quand tout est nul, c’est qu’on est vraiment forts.",
+      "C’est là que je me dis que j’ai trouvé ma personne pour de vrai."
     ]
   },
   {
@@ -564,7 +631,7 @@ nextQuizBtn.addEventListener('click',()=>{
 
 renderQuestion();
 
-/* LETTRE + ENVELOPPE */
+/* LETTRE + ENVELOPPE + OVERLAY GRAND FORMAT */
 const letterText = `Mon amour,
 
 Je veux que tu n’oublies jamais à quel point tu es exceptionnelle. Tu es, sans aucun doute, la plus merveilleuse des femmes. La plus forte, la plus douce, la plus belle. Ta présence illumine ma vie d’une manière que je ne pourrais même pas expliquer avec des mots.
@@ -590,6 +657,9 @@ Je t’aime d’un amour immense, sincère et infini. 💛`;
 const envelopeWrapper = document.getElementById('envelopeWrapper');
 const letterInner = document.getElementById('letterInner');
 const openLetterBtn = document.getElementById('openLetterBtn');
+const bigLetterOverlay = document.getElementById('bigLetterOverlay');
+const bigLetterContent = document.getElementById('bigLetterContent');
+const closeBigLetter = document.getElementById('closeBigLetter');
 
 let letterIndex = 0;
 let typingLetter = false;
@@ -610,7 +680,16 @@ openLetterBtn.addEventListener('click',()=>{
       typingLetter = true;
       setTimeout(typeLetter, 500);
     }
+    // afficher la lettre en grand après un petit délai
+    setTimeout(()=>{
+      bigLetterContent.textContent = letterText;
+      bigLetterOverlay.classList.add('active');
+    }, 1100);
   }
+});
+
+closeBigLetter.addEventListener('click',()=>{
+  bigLetterOverlay.classList.remove('active');
 });
 </script>
 </body>
