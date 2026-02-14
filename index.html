@@ -12,7 +12,7 @@
 
 body{
   font-family:'Poppins',sans-serif;
-  background:radial-gradient(circle at top,#fee2e2,#fecaca,#fee2e2);
+  background:#ff0000; /* rouge plein */
   color:#1f2933;
   min-height:100vh;
   display:flex;
@@ -22,22 +22,34 @@ body{
   overflow-x:hidden;
 }
 
-/* Fond coeurs cartoon */
+/* motif coeurs blancs en fond (style image) */
 body::before{
   content:'';
   position:fixed;
   inset:-20%;
   background:
-    radial-gradient(circle at 10% 20%,rgba(248,113,113,.35),transparent 60%),
-    radial-gradient(circle at 80% 10%,rgba(244,114,182,.35),transparent 55%),
-    radial-gradient(circle at 50% 80%,rgba(248,113,113,.25),transparent 55%);
-  opacity:.85;
-  animation:floatBg 20s linear infinite alternate;
-  z-index:-2;
+    radial-gradient(circle at 10% 20%, transparent 40%, #ffffff 40%, #ffffff 42%, transparent 42%),
+    radial-gradient(circle at 40% 10%, transparent 40%, #ffffff 40%, #ffffff 42%, transparent 42%),
+    radial-gradient(circle at 80% 20%, transparent 40%, #ffffff 40%, #ffffff 42%, transparent 42%),
+    radial-gradient(circle at 20% 60%, transparent 40%, #ffffff 40%, #ffffff 42%, transparent 42%),
+    radial-gradient(circle at 60% 70%, transparent 40%, #ffffff 40%, #ffffff 42%, transparent 42%),
+    radial-gradient(circle at 90% 60%, transparent 40%, #ffffff 40%, #ffffff 42%, transparent 42%);
+  background-size:40% 40%;
+  opacity:.35;
+  z-index:-3;
 }
-@keyframes floatBg{
-  from{transform:translate3d(0,0,0) scale(1);}
-  to{transform:translate3d(12px,-16px,0) scale(1.04);}
+
+/* léger glow rouge */
+body::after{
+  content:'';
+  position:fixed;
+  inset:-30%;
+  background:
+    radial-gradient(circle at 20% 0%,rgba(255,255,255,.25),transparent 60%),
+    radial-gradient(circle at 80% 100%,rgba(255,255,255,.18),transparent 60%);
+  mix-blend-mode:screen;
+  opacity:.4;
+  z-index:-2;
 }
 
 .container{
@@ -47,14 +59,14 @@ body::before{
   border-radius:30px;
   padding:22px 18px 26px;
   box-shadow:
-    0 22px 60px rgba(248,113,113,.55),
+    0 22px 60px rgba(220,38,38,.7),
     inset 0 1px 0 rgba(255,255,255,.9);
   border:2px solid #fecaca;
   position:relative;
   overflow:hidden;
 }
 
-/* pluie de coeurs */
+/* pluie de coeurs cartoon */
 .hearts{
   position:absolute;
   inset:0;
@@ -67,7 +79,7 @@ body::before{
   width:18px;
   height:18px;
   background:radial-gradient(circle at 30% 30%,#fff1f2,#fb7185);
-  opacity:.8;
+  opacity:.85;
   animation:fallHeart 14s linear infinite;
 }
 .heart::before,
@@ -90,7 +102,7 @@ body::before{
     transform:translate3d(0,-120%,0) rotate(45deg) scale(.6);
     opacity:0;
   }
-  15%{opacity:.9;}
+  15%{opacity:.95;}
   50%{
     transform:translate3d(18px,0,0) rotate(45deg) scale(.9);
   }
@@ -359,7 +371,7 @@ h1{
     <div class="card">
       <p style="font-size:14px;color:#4b5563;margin-bottom:10px;">
         Si tu lis ça, c’est que j’ai clairement trop de chance.  
-        Clique sur le bouton, laisse la magie (et les cœurs) faire le reste.
+        Clique sur le bouton, laisse la magie (et tous ces cœurs) faire le reste.
       </p>
       <p style="font-size:13px;color:#9ca3af;">
         PS : aucun algorithme ne t’aime autant que moi.
@@ -376,7 +388,7 @@ h1{
         Mini quiz débile mais romantique 💘
       </p>
       <p style="font-size:13px;color:#6b7280;margin-bottom:10px;">
-        Réponds comme tu le sens, il n’y a que des bonnes réponses (sauf si tu dis que tu ne m’aimes pas, là on a un bug).
+        Réponds comme tu le sens, il n’y a que des bonnes réponses.
       </p>
 
       <div id="quizBox">
@@ -405,9 +417,7 @@ h1{
           <div class="envelope-flap"></div>
           <div class="envelope-pocket"></div>
           <div class="letter">
-            <div class="letter-inner" id="letterInner">
-              <!-- texte tapé dynamiquement -->
-            </div>
+            <div class="letter-inner" id="letterInner"></div>
           </div>
         </div>
       </div>
@@ -430,7 +440,7 @@ h1{
       </p>
       <p class="signature">
         Je t’aime d’un amour immense, sincère et infini.<br>
-        Ton Hamadouche 🤍
+        Ton Rabie 🤍
       </p>
     </div>
 
@@ -442,7 +452,7 @@ h1{
 </div>
 
 <script>
-// Navigation entre écrans
+// Navigation
 document.querySelectorAll('[data-next]').forEach(btn=>{
   btn.addEventListener('click',()=>{
     const nextId = btn.getAttribute('data-next');
@@ -452,19 +462,19 @@ document.querySelectorAll('[data-next]').forEach(btn=>{
   });
 });
 
-/* QUIZ DYNAMIQUE */
+/* QUIZ DYNAMIQUE avec Kissing Booth / Larajins */
 const quizData = [
   {
     question:"Si on était un film, ce serait plutôt…",
     options:[
-      "The Notebook",
-      "Fast & Furious (mais avec des tajines)",
+      "The Kissing Booth",
+      "Larajins (notre film à nous)",
       "Un mélange chelou des deux"
     ],
     replies:[
-      "Clairement un truc à l’eau de rose où je pleure en cachette et toi tu te moques de moi.",
-      "On roule vite vers le mariage mais on s’arrête toujours pour manger. Priorités.",
-      "On s’aime comme dans The Notebook, mais on conduit comme dans Fast & Furious (en mieux garés)."
+      "Love story un peu chaotique, beaucoup de baisers, et toi qui piques mon cœur comme dans le film.",
+      "Le seul film où le scénario, les acteurs et la fin parfaite, c’est juste toi et moi.",
+      "On s’embrasse comme dans Kissing Booth, mais l’histoire appartient à Larajins, c’est‑à‑dire à nous deux."
     ]
   },
   {
@@ -547,13 +557,11 @@ nextQuizBtn.addEventListener('click',()=>{
     currentQuestion++;
     renderQuestion();
   }else{
-    // Aller automatiquement à la lettre
     document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
     document.getElementById('screen3').classList.add('active');
   }
 });
 
-// initialiser le quiz
 renderQuestion();
 
 /* LETTRE + ENVELOPPE */
@@ -600,7 +608,7 @@ openLetterBtn.addEventListener('click',()=>{
     envelopeWrapper.classList.add('open');
     if(!typingLetter && letterIndex===0){
       typingLetter = true;
-      setTimeout(typeLetter, 500); // commence un peu après l’ouverture
+      setTimeout(typeLetter, 500);
     }
   }
 });
